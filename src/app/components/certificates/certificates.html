@@ -1,0 +1,67 @@
+<section id="certificates" class="certificates">
+  <div class="container">
+    <h2 class="section-title">Certificados & Formación</h2>
+    <p class="section-subtitle">Mi camino de aprendizaje continuo</p>
+    
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" (click)="prevSlide()" aria-label="Anterior">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      <div class="carousel-container" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()">
+        <div class="carousel-track" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+          <div class="certificate-card" *ngFor="let cert of certificates">
+            <div class="certificate-image">
+              <img [src]="cert.image" [alt]="cert.title" (error)="onImageError($event)">
+            </div>
+            <div class="certificate-content">
+              <div class="certificate-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+                Certificado
+              </div>
+              <h3 class="certificate-title">{{ cert.title }}</h3>
+              <p class="certificate-issuer">{{ cert.issuer }}</p>
+              <p class="certificate-date">{{ cert.date }}</p>
+              <p class="certificate-description">{{ cert.description }}</p>
+              <div class="certificate-skills">
+                <span class="skill-tag" *ngFor="let skill of cert.skills">{{ skill }}</span>
+              </div>
+              <a *ngIf="cert.link && cert.link !== '#'" [href]="cert.link" target="_blank" rel="noopener" class="certificate-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Ver credencial
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-btn next" (click)="nextSlide()" aria-label="Siguiente">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="carousel-dots">
+      <button 
+        *ngFor="let cert of certificates; let i = index" 
+        class="dot"
+        [class.active]="i === currentIndex"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'Ir a certificado ' + (i + 1)">
+      </button>
+    </div>
+
+    <div class="carousel-info">
+      <p>{{ currentIndex + 1 }} / {{ certificates.length }}</p>
+    </div>
+  </div>
+</section>
